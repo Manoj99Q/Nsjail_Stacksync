@@ -1,0 +1,28 @@
+# Simplified .gitignore for Python projects
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.env
+.venv/
+env/
+venv/
+
+# Test and coverage
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+
+# Test files
+test_pandas.py
+test_request.py
+
+# IDE/editor files
+.vscode/
+.idea/
