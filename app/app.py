@@ -7,6 +7,25 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
+def health():
+    return jsonify({
+        "status": "healthy",
+        "message": "Python Code Execution API",
+        "version": "1.0.0"
+    }), 200
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({
+        "status": "healthy",
+        "message": "Service is running",
+        "endpoints": {
+            "/": "Health check",
+            "/execute": "Execute Python code (POST)"
+        }
+    }), 200
+
 @app.route('/execute', methods=['POST'])
 def execute():
     try:
