@@ -115,10 +115,24 @@ except Exception as e:
 """)
         
         # Execute the script using NSJail for security
+        # Use seccomp-only mode for Cloud Run compatibility
         nsjail_cmd = [
             "nsjail",
-            "--config", "/nsjail.config",
-            "--cwd", temp_dir,
+            "-Mo",  # Standalone once mode
+            "-t", "30",  # Time limit
+            "--disable_clone_newns",
+            "--disable_clone_newuser", 
+            "--disable_clone_newpid",
+            "--disable_clone_newipc",
+            "--disable_clone_newuts",
+            "--disable_clone_newnet",
+            "--disable_clone_newcgroup",
+            "--disable_no_new_privs",
+            "--disable_proc",  # Disable proc mounting
+            "--disable_rlimits",
+            "--keep_caps",  # Keep capabilities
+            "--skip_setsid", # Skip setsid
+            "-D", temp_dir,  # Working directory
             "--",
             "/usr/bin/python3",
             wrapper_path,

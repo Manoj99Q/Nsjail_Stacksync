@@ -52,9 +52,15 @@ WORKDIR /app
 COPY ./app /app
 COPY ./nsjail.config /nsjail.config
 
+# Create and ensure tmp directory is writable
+RUN mkdir -p /tmp && chmod 777 /tmp
+
 # Create a user with limited privileges
 RUN useradd -ms /bin/bash appuser
 USER appuser
+
+# Print version to debug
+RUN nsjail --version || echo "nsjail not found"
 
 # Expose port
 EXPOSE 8080
